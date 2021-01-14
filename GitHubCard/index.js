@@ -6,6 +6,7 @@ import axios from "axios";
 */
 axios
 .get("https://api.github.com/users/CatRadin")
+
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
@@ -31,6 +32,21 @@ axios
 */
 
 const followersArray = [];
+
+function githubCard({avatar-URL, name, login, location, url, followers, following, bio}){
+  //making elements here
+const card = document.createAttribute("div");
+const profileIMG = document.createAttribute('img');
+const cardInfo = document.createAttribute("div");
+const rName = document.createAttribute("h3");
+const uName = document.createAttribute("p");
+const uLocation = document.createAttribute("p");
+const profileLink = document.createAttribute("a");
+const uFollowers = document.createAttribute("p");
+const uFollowing = document.createAttribute("p");
+const uBio = document.createAttribute("p");
+
+}
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
