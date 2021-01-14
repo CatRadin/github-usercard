@@ -4,14 +4,18 @@ import axios from "axios";
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
+//this is where i want the cards to be appended too!
+
 const cards = document.querySelector('.cards');
 
+
+//step 4 (so out of order!) ------------------------------------------------------
 axios.get("https://api.github.com/users/CatRadin")
 .then(response => {
   cards.append(githubCard(response.data));
   })
 .catch((error) => {
-  console.log("something went wrong", error);
+  console.log("something went big wrong! :3", error);
 })
 
 
@@ -40,8 +44,10 @@ axios.get("https://api.github.com/users/CatRadin")
     Using that array, iterate over it, requesting data for each user, creating a new card for each
     user, and adding that card to the DOM.
 */
-
+//step 5 ------------------------------------------
 const followersArray = [ 'tetondan', 'dustinmyers', 'justsml' , 'luishrd', 'bigknell'];
+
+
 
 axios.get(('https://api.github.com/users/catradin/followers'))
 .then(response => {
@@ -54,7 +60,7 @@ axios.get(('https://api.github.com/users/catradin/followers'))
 })
 
 
-
+//step 3 ------------------------------------------------------
 function githubCard(data){
   //making elements here
 const card = document.createElement("div");
