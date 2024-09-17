@@ -1,8 +1,25 @@
-/*
-  STEP 1: using axios, send a GET request to the following URL
+import axios from "axios";
+
+/*  STEP 1: using axios, send a GET request to the following URL
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
+//this is where i want the cards to be appended too!
+
+const cards = document.querySelector('.cards');
+
+
+//step 4 (so out of order!) ------------------------------------------------------
+axios.get("https://api.github.com/users/CatRadin")
+.then(response => {
+  cards.append(githubCard(response.data));
+  })
+.catch((error) => {
+  console.log("something went big wrong! :3", error);
+})
+
+
+
 
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
@@ -27,8 +44,71 @@
     Using that array, iterate over it, requesting data for each user, creating a new card for each
     user, and adding that card to the DOM.
 */
+//step 5 ------------------------------------------
+const followersArray = [ 'tetondan', 'dustinmyers', 'justsml' , 'luishrd', 'bigknell'];
 
-const followersArray = [];
+
+
+axios.get(('https://api.github.com/users/catradin/followers'))
+.then(response => {
+  followersArray.forEach(item =>{
+    axios.get(`https://api.github.com/users/${item}`)
+    .then(response =>{
+      cards.append(githubCard(response.data));
+    })
+  })
+})
+
+
+//step 3 ------------------------------------------------------
+function githubCard(data){
+  //making elements here
+const card = document.createElement("div");
+const profileIMG = document.createElement("img");
+const cardInfo = document.createElement("div");
+const rName = document.createElement("h3");
+const uName = document.createElement("p");
+const uLocation = document.createElement("p");
+const profileLink = document.createElement("a");
+const uFollowers = document.createElement("p");
+const uFollowing = document.createElement("p");
+const uBio = document.createElement("p");
+
+// making the structure here
+card.appendChild(profileIMG);
+card.appendChild(cardInfo);
+cardInfo.appendChild(rName);
+cardInfo.appendChild(uName);
+cardInfo.appendChild(uLocation);
+cardInfo.appendChild(profileLink)
+cardInfo.appendChild(uFollowers);
+cardInfo.appendChild(uFollowing);
+cardInfo.appendChild(uBio);
+
+//class names here
+card.classList.add('card');
+cardInfo.classList.add("card-info");
+rName.classList.add('name');
+uName.classList.add('username');
+
+//text content
+profileIMG.setAttribute('src', data.avatar_url)
+rName.textContent = data.name;
+uName.textContent = data.login;
+uLocation.textContent = `Location: ${data.location}`;
+profileLink.textContent = "Profile: "
+profileLink.setAttribute('href', data.html_url);
+uFollowers.textContent = `Followers: ${data.followers}`;
+uFollowing.textContent = `Following: ${data.following}`;
+uBio.textContent = `Bio: ${data.bio}`;
+
+//return 
+
+
+return card
+
+
+}
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
